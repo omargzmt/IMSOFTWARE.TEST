@@ -1,0 +1,72 @@
+﻿@using IMSOFTWARE.Models.SharedModels
+@model PersonBindingModel
+
+@{
+    ViewBag.Title = "Person Registration";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Agregar persona</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <form asp-action="Add" asp-controller="Person" method="post" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="Nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="Nombre" name="Nombre" value="@Model.Nombre" required>
+            <div class="invalid-feedback">
+                Agregar nombre
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
+            <div class="invalid-feedback">
+                Agregar un Email válido
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="Edad" class="form-label">Age</label>
+            <input type="number" class="form-control" id="Edad" name="Edad" value="@Model.Edad" min="1" required>
+            <div class="invalid-feedback">
+                Agregar una edada válida
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Agregar</button>
+                @Html.ActionLink("Regresar", "Index", "Person", new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+        
+        
+    </form>
+</div>
+
+<script>
+    // Bootstrap validation script
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
